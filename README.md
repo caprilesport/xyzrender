@@ -134,9 +134,13 @@ xyzrender mn-h2.log -o mn-h2_qm.svg --ts      # Gaussian log with TS detection
 
 ### GIF animations
 
-| Rotation (y) | Rotation (xy) | TS vibration + rotation | TS vibration | Trajectory |
-|--------------|---------------|-------------------------|--------------|------------|
-| ![rotate](examples/caffeine.gif) | ![rotate xy](examples/caffeine_xy.gif) | ![ts rot](examples/bimp.gif) | ![ts vib](examples/mn-h2.gif) | ![trj](examples/bimp_trj.gif) |
+| Rotation (y) | Rotation (xy) |
+|--------------|---------------|
+| ![rotate](examples/caffeine.gif) | ![rotate xy](examples/caffeine_xy.gif) |
+
+| TS vibration + rotation | TS vibration | Trajectory |
+|-------------------------|--------------|------------|
+| ![ts rot](examples/bimp.gif) | ![ts vib](examples/mn-h2.gif) | ![trj](examples/bimp_trj.gif) |
 
 ```bash
 xyzrender caffeine.xyz --gif-rot -go caffeine.gif                          # rotation (y-axis)
