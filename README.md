@@ -35,7 +35,6 @@ xyzrender caffeine.xyz --gif-rot -go movie.gif  # rotation GIF for slides
 ## Installation
 
 ### From PyPI:  
-*not yet published - see manual install below*
 
 ```bash
 pip install xyzrender
