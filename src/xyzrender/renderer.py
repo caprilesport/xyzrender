@@ -16,7 +16,7 @@ _RADIUS_SCALE = 0.075  # VdW → display radius
 _REF_SPAN = 6.0  # reference molecular span (Å) for proportional bond/stroke scaling
 _CENTROID_VDW = 0.5  # VdW radius (Å) for NCI pi-system centroid dummy nodes
 _H_ATOM_SCALE = 0.6  # display-radius shrink factor for H atoms (ball-and-stick)
-_H_VDW_SCALE = 0.75  # VdW-sphere shrink factor for H atoms
+_H_VDW_SCALE = 0.8  # VdW-sphere shrink factor for H atoms
 
 
 def render_svg(graph, config: RenderConfig | None = None, *, _log: bool = True) -> str:
