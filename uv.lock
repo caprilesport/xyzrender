@@ -1128,8 +1128,8 @@ wheels = [
 
 [[package]]
 name = "xyzgraph"
-version = "1.5.2"
-source = { directory = "../xyzgraph" }
+version = "1.6.0"
+source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "networkx", version = "3.4.2", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.11'" },
     { name = "networkx", version = "3.6.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.11'" },
@@ -1137,32 +1137,14 @@ dependencies = [
     { name = "numpy", version = "2.4.2", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.11'" },
     { name = "rdkit" },
 ]
-
-[package.metadata]
-requires-dist = [
-    { name = "networkx" },
-    { name = "numpy" },
-    { name = "rdkit" },
-    { name = "scipy", marker = "extra == 'rdkit-tm'" },
-]
-provides-extras = ["rdkit-tm"]
-
-[package.metadata.requires-dev]
-dev = [
-    { name = "pre-commit", specifier = ">=3.5.0" },
-    { name = "pytest", specifier = ">=8.3.5" },
-    { name = "pytest-cov", specifier = ">=5.0.0" },
-    { name = "ruff", specifier = ">=0.14.14" },
-    { name = "ty", specifier = ">=0.0.14" },
-]
-rdkit-tm = [
-    { name = "scipy" },
-    { name = "xyz2mol-tm", git = "https://github.com/jensengroup/xyz2mol_tm.git" },
+sdist = { url = "https://files.pythonhosted.org/packages/40/a3/af155624e56f782701290a84dd3a66b950463438ba4351c9d6bb4acdff59/xyzgraph-1.6.0.tar.gz", hash = "sha256:7d51859659e8dc24a98b11e146848b04676523f0992271edf5f65a6883cc8a7e", size = 141725, upload-time = "2026-02-22T19:45:46.186Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/13/e4/1bf6bfe343114bbdebf81d9e8f4ea96f0db02843ec63297b98505b863301/xyzgraph-1.6.0-py3-none-any.whl", hash = "sha256:621ad265424578280b4b8453dcb8ec2048e2a8a01a649106d76a6c0164ee510a", size = 106336, upload-time = "2026-02-22T19:45:43.92Z" },
 ]
 
 [[package]]
 name = "xyzrender"
-version = "0.1.1"
+version = "0.1.2"
 source = { editable = "." }
 dependencies = [
     { name = "cairosvg" },
@@ -1190,7 +1172,7 @@ requires-dist = [
     { name = "graphrc" },
     { name = "numpy", specifier = ">=1.24" },
     { name = "pillow" },
-    { name = "xyzgraph", directory = "../xyzgraph" },
+    { name = "xyzgraph", specifier = ">=1.6" },
 ]
 
 [package.metadata.requires-dev]
