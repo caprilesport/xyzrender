@@ -22,6 +22,7 @@ xyzrender "$DIR/benzene.xyz" --hy -o "$OUT/benzene.svg"                 # aromat
 
 echo "=== VdW spheres ==="
 xyzrender "$DIR/asparagine.xyz" --hy --vdw -o "$OUT/asparagine_vdw.svg"              # all atoms
+xyzrender "$DIR/asparagine.xyz" --hy --vdw --config paton -o "$OUT/asparagine_vdw_paton.svg"              # all atoms
 
 echo "=== QM output files ==="
 xyzrender "$DIR/bimp.out" -o "$OUT/bimp_qm.svg" 

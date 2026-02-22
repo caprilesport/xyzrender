@@ -10,9 +10,9 @@ Render molecular structures as publication-quality SVG, PNG, PDF, and animated G
 [![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/aligfellow/xyzrender/ci.yml?branch=main&logo=github-actions)](https://github.com/aligfellow/xyzrender/actions)
 [![Codecov](https://img.shields.io/codecov/c/github/aligfellow/xyzrender)](https://codecov.io/gh/aligfellow/xyzrender)
 
-xyzrender turns XYZ files and quantum chemistry output (ORCA, Gaussian, Q-Chem, etc.) into clean SVG, PNG, PDF, and animated GIF graphics — ready for papers, presentations, and supporting information.
+xyzrender turns XYZ files and quantum chemistry output (ORCA, Gaussian, Q-Chem, etc.) into clean SVG, PNG, PDF, and animated GIF graphics — ready for papers, presentations, and supporting information. The SVG rendering approach is built on and inspired by [**xyz2svg**](https://github.com/briling/xyz2svg) by [**Ksenia Briling @briling**](https://github.com/briling).
 
-Most molecular visualisation tools require manual setup: loading files into a GUI, tweaking camera angles, exporting at the right resolution. xyzrender skips all of that. One command gives you a (mostly) oriented, depth-cued structure with correct bond orders, aromatic ring rendering, and automatic bond connectivity.
+Most molecular visualisation tools require manual setup: loading files into a GUI, tweaking camera angles, exporting at the right resolution and adding specific TS or NCI bonds. `xyzrender` skips this. One command gives you a (mostly) oriented, depth-cued structure with correct bond orders, aromatic ring rendering, automatic bond connectivity, with TS bonds and NCI bonds.
 
 **What it handles out of the box:**
 
@@ -98,6 +98,8 @@ xyzrender caffeine.xyz --config flat -o caffeine_flat.svg   # flat: no gradient
 xyzrender caffeine.xyz --config paton -o caffeine_paton.svg # paton: PyMOL-style
 ```
 
+The `paton` style is inspired by the clean styling used by [Rob Paton](https://github.com/patonlab) through PyMOL (see [gist](https://gist.github.com/bobbypaton/1cdc4784f3fc8374467bae5eb410edef))
+
 ### Display options
 
 | All H | Some H | No H | Aromatic |
@@ -113,12 +115,13 @@ xyzrender benzene.xyz --hy -o benzene.svg                # aromatic
 
 ### VdW spheres
 
-| All atoms |
-|-----------|
-| ![vdw](examples/asparagine_vdw.svg) |
+| All atoms | paton-style |
+|-----------|--------|
+| ![vdw](examples/asparagine_vdw.svg) | ![vdw paton](examples/asparagine_vdw_paton.svg) |
 
 ```bash
 xyzrender asparagine.xyz --hy --vdw -o asparagine_vdw.svg  # VdW spheres on all atoms
+xyzrender asparagine.xyz --hy --vdw --config paton -o asparagine_vdw_paton.svg  # VdW spheres on all atoms
 ```
 
 ### QM output files
@@ -217,7 +220,7 @@ The `colors` key maps element symbols to hex colors, overriding the default CPK 
 
 ## Orientation
 
-PCA auto-orientation is on by default (largest variance along x-axis). Disabled automatically for stdin and interactive mode.
+Auto-orientation is on by default (largest variance along x-axis). Disabled automatically for stdin and interactive mode.
 
 ```bash
 xyzrender molecule.xyz                         # auto-oriented
@@ -240,7 +243,7 @@ v molecule.xyz | xyzrender
 
 Orient the molecule, press `z` to output reoriented coordinates, then `q` to close.
 
-This must be installed separately if this option is to be used. The executable should be in `~/bin` for discovery. TODO: Look into cleaning up this integration.
+This must be installed separately if this option is to be used. The executable should be in `~/bin/` for discovery. TODO: Look into cleaning up this integration.
 
 ## Transition states and NCI
 
@@ -290,7 +293,7 @@ Available rotation axes: `x`, `y`, `z`, `xy`, `xz`, `yz`, `yx`, `zx`, `zy`. Pref
 | `--config` | Config preset or JSON path |
 | `--debug` | Debug logging |
 | `-I`, `--interactive` | Interactive rotation via `v` viewer |
-| `--orient` / `--no-orient` | PCA auto-orientation toggle |
+| `--orient` / `--no-orient` | Auto-orientation toggle |
 | `--ts` | Auto-detect TS bonds via graphRC |
 | `--ts-frame` | TS reference frame (0-indexed) |
 | `--ts-bonds` | Manual TS bond pairs (1-indexed) |
@@ -330,6 +333,16 @@ GitHub Actions runs lint, type-check, and tests on every push to `main` and ever
 [MIT](LICENSE)
 
 ## Acknowledgements
+
+The SVG rendering in xyzrender is built on and heavily inspired by [xyz2svg](https://github.com/briling/xyz2svg) by [Ksenia Briling](https://github.com/briling) — the CPK colour scheme, core SVG atom/bond rendering logic, and overall approach originate from that project. The radial gradient (pseudo-3D) rendering was contributed to xyz2svg by [@iribirii](https://github.com/iribirii).
+
+Key dependencies:
+
+- [xyzgraph](https://github.com/aligfellow/xyzgraph) — bond connectivity, bond orders, and aromaticity detection from molecular geometry
+- [graphRC](https://github.com/aligfellow/graphRC) — reaction coordinate analysis and TS bond detection from imaginary frequency vibrations
+- [cclib](https://github.com/cclib/cclib) — parsing quantum chemistry output files (ORCA, Gaussian, Q-Chem, etc.)
+- [CairoSVG](https://github.com/Kozea/CairoSVG) — SVG to PNG/PDF conversion
+- [Pillow](https://github.com/python-pillow/Pillow) — GIF frame assembly
 
 Generated from [aligfellow/python-template](https://github.com/aligfellow/python-template).
 
