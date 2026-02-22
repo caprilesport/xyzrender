@@ -23,6 +23,9 @@ classifiers = [
     "Operating System :: OS Independent",
 ]
 
+[tool.uv.sources]
+xyzgraph = { path = "/home/ali/Documents/Codes/xyzgraph" }
+
 [project.urls]
 homepage = "https://github.com/aligfellow/xyzrender"
 

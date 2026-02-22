@@ -1129,7 +1129,7 @@ wheels = [
 [[package]]
 name = "xyzgraph"
 version = "1.5.2"
-source = { registry = "https://pypi.org/simple" }
+source = { directory = "../xyzgraph" }
 dependencies = [
     { name = "networkx", version = "3.4.2", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.11'" },
     { name = "networkx", version = "3.6.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.11'" },
@@ -1137,14 +1137,32 @@ dependencies = [
     { name = "numpy", version = "2.4.2", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.11'" },
     { name = "rdkit" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/d8/5a/fe5e0118649b495d19b3aa8bb48421d8ee639401421814806217beb5aea4/xyzgraph-1.5.2.tar.gz", hash = "sha256:641d300d3bc3d8ed59794a375f9a654a824cb3d3daba979d28d96b8b3daf9435", size = 119425, upload-time = "2026-02-21T19:20:56.098Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/60/fe/c3375c5e3e6047424e74cacbfa05c700f1795ef1e171e91db1f4a14339be/xyzgraph-1.5.2-py3-none-any.whl", hash = "sha256:f965cfa976a3ba13060ff574200b3efc25ac2a0956aca74bbf3a98a33376558c", size = 86543, upload-time = "2026-02-21T19:20:53.715Z" },
+
+[package.metadata]
+requires-dist = [
+    { name = "networkx" },
+    { name = "numpy" },
+    { name = "rdkit" },
+    { name = "scipy", marker = "extra == 'rdkit-tm'" },
+]
+provides-extras = ["rdkit-tm"]
+
+[package.metadata.requires-dev]
+dev = [
+    { name = "pre-commit", specifier = ">=3.5.0" },
+    { name = "pytest", specifier = ">=8.3.5" },
+    { name = "pytest-cov", specifier = ">=5.0.0" },
+    { name = "ruff", specifier = ">=0.14.14" },
+    { name = "ty", specifier = ">=0.0.14" },
+]
+rdkit-tm = [
+    { name = "scipy" },
+    { name = "xyz2mol-tm", git = "https://github.com/jensengroup/xyz2mol_tm.git" },
 ]
 
 [[package]]
 name = "xyzrender"
-version = "0.1.0"
+version = "0.1.1"
 source = { editable = "." }
 dependencies = [
     { name = "cairosvg" },
@@ -1172,7 +1190,7 @@ requires-dist = [
     { name = "graphrc" },
     { name = "numpy", specifier = ">=1.24" },
     { name = "pillow" },
-    { name = "xyzgraph", specifier = ">=0.3" },
+    { name = "xyzgraph", directory = "../xyzgraph" },
 ]
 
 [package.metadata.requires-dev]
