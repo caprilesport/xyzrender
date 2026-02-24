@@ -128,7 +128,7 @@ def main() -> None:
         nargs=2,
         default=None,
         metavar=("POS", "NEG"),
-        help="MO lobe colors as hex (default: #2554A5 #851639)",
+        help="MO lobe colors as hex or named color (default: #2554A5 #851639)",
     )
 
     # --- Orientation ---
@@ -290,10 +290,13 @@ def main() -> None:
     # MO: resolve colors once (used for both static render and gif-rot)
     mo_colors = None
     if args.mo:
+        from xyzrender.types import resolve_color
+
         mo_colors = args.mo_colors or [
             config_data.get("mo_pos_color", "#2554A5"),
             config_data.get("mo_neg_color", "#851639"),
         ]
+        mo_colors = [resolve_color(c) for c in mo_colors]
 
     # MO contour computation (PCA must happen here so rot is available for the grid)
     if args.mo and cube_data is not None:
