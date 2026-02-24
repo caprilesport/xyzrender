@@ -315,9 +315,9 @@ def main() -> None:
             pos = np.array([graph.nodes[i]["position"] for i in node_ids], dtype=float)
             oriented, rot = pca_orient(pos, return_matrix=True)
 
-            # Tilt -45° around x-axis so orbital lobes above/below the
+            # Tilt -30° around x-axis so orbital lobes above/below the
             # molecular plane are clearly separated in the projection.
-            tilt = np.radians(-45)
+            tilt = np.radians(-30)
             rx = np.array(
                 [
                     [1, 0, 0],

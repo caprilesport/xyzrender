@@ -59,6 +59,9 @@ def pca_orient(
     else:
         c_weighted = c_fit
     _, _, vt = np.linalg.svd(c_weighted, full_matrices=False)
+    # Ensure proper rotation (det=+1); SVD can return a reflection.
+    if np.linalg.det(vt) < 0:
+        vt[-1] *= -1
     rot = vt  # cumulative rotation matrix
     oriented = c @ rot.T  # apply rotation to ALL positions
 
@@ -83,6 +86,8 @@ def pca_matrix(pos: np.ndarray) -> np.ndarray:
     """Compute PCA rotation matrix (Vt) without applying it."""
     c = pos - pos.mean(axis=0)
     _, _, vt = np.linalg.svd(c, full_matrices=False)
+    if np.linalg.det(vt) < 0:
+        vt[-1] *= -1
     return vt
 
 
