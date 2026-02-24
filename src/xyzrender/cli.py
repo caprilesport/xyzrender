@@ -101,7 +101,7 @@ def main() -> None:
     style_g.add_argument("-a", "--atom-scale", type=float, default=None)
     style_g.add_argument("-b", "--bond-width", type=float, default=None)
     style_g.add_argument("-s", "--atom-stroke-width", type=float, default=None)
-    style_g.add_argument("--bond-color", default=None, help="Bond color (hex)")
+    style_g.add_argument("--bond-color", default=None, help="Bond color (hex or named)")
     style_g.add_argument("-B", "--background", default=None)
     style_g.add_argument("-G", "--gradient-strength", type=float, default=None, help="Gradient contrast")
     style_g.add_argument("--grad", action=argparse.BooleanOptionalAction, default=None, help="Radial gradients")

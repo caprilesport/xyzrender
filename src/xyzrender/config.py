@@ -30,7 +30,7 @@ def load_config(name_or_path: str) -> dict:
         logger.debug("Loading config file: %s", path)
         return json.loads(path.read_text())
 
-    available = ", ".join(p.stem for p in sorted(_PRESET_DIR.glob("*.json")))
+    available = ", ".join(p.stem for p in sorted(_PRESET_DIR.glob("*.json")) if p.stem != "named_colors")
     msg = f"Config not found: {name_or_path!r} (built-in presets: {available})"
     raise FileNotFoundError(msg)
 
