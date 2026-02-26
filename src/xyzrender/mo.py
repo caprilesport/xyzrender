@@ -607,20 +607,14 @@ def build_mo_contours(
     )
     # Compute tight Angstrom extent from actual contour loops
     lobe_x_min = lobe_x_max = lobe_y_min = lobe_y_max = None
-    res_m1 = max(res - 1, 1)
-    for lc in lobe_contours:
-        for loop in lc.loops:
-            for row, col in loop:
-                xa = x_min + (col / res_m1) * (x_max - x_min)
-                ya = y_min + (row / res_m1) * (y_max - y_min)
-                if lobe_x_min is None:
-                    lobe_x_min = lobe_x_max = xa
-                    lobe_y_min = lobe_y_max = ya
-                else:
-                    lobe_x_min = min(lobe_x_min, xa)
-                    lobe_x_max = max(lobe_x_max, xa)
-                    lobe_y_min = min(lobe_y_min, ya)
-                    lobe_y_max = max(lobe_y_max, ya)
+    all_pts = [pt for lc in lobe_contours for loop in lc.loops for pt in loop]
+    if all_pts:
+        pts = np.array(all_pts)
+        res_m1 = max(res - 1, 1)
+        lobe_x_min = float(x_min + (pts[:, 1].min() / res_m1) * (x_max - x_min))
+        lobe_x_max = float(x_min + (pts[:, 1].max() / res_m1) * (x_max - x_min))
+        lobe_y_min = float(y_min + (pts[:, 0].min() / res_m1) * (y_max - y_min))
+        lobe_y_max = float(y_min + (pts[:, 0].max() / res_m1) * (y_max - y_min))
 
     return MOContours(
         lobes=lobe_contours,
