@@ -8,6 +8,7 @@ import shutil
 import subprocess
 import sys
 import tempfile
+from pathlib import Path
 from typing import TYPE_CHECKING, TypeAlias
 
 import numpy as np
@@ -16,8 +17,6 @@ from xyzgraph import DATA, build_graph, read_xyz_file
 logger = logging.getLogger(__name__)
 
 if TYPE_CHECKING:
-    from pathlib import Path
-
     import networkx as nx
 
 _Atoms: TypeAlias = list[tuple[str, tuple[float, float, float]]]
@@ -176,14 +175,24 @@ def _find_viewer() -> str:
     if v:
         return v
 
-    # Search ~/bin/ for v.* (e.g. v.2.2) — picks highest version
+    # Search common unix install paths for v.* (e.g. v.2.2) — picks highest version
     import glob
 
-    candidates = sorted(glob.glob(os.path.expanduser("~/bin/v.[0-9]*")))
-    if candidates:
-        return candidates[-1]
+    search_dirs = [Path.home() / "bin", Path.home() / ".local" / "bin", Path("/usr/local/bin"), Path("/opt/")]
 
-    sys.exit("Cannot find 'v' viewer — add it to your PATH or install in ~/bin/.")
+    candidates = []
+    for dir in search_dirs:
+        candidates.extend(glob.glob(str(dir / "v.[0-9]*")))
+
+    if candidates:
+        # sorting gives the latest versions
+        return sorted(candidates)[-1]
+
+    sys.exit(
+        "Error: Cannot find 'v' viewer."
+        "Add it to your $PATH environment variable or install in one of the following directories:"
+        f"{', '.join(str(dir) for dir in search_dirs)}"
+    )
 
 
 def _run_viewer(viewer: str, xyz_path: str) -> str:
