@@ -8,7 +8,6 @@ import shutil
 import subprocess
 import sys
 import tempfile
-from pathlib import Path
 from typing import TYPE_CHECKING, TypeAlias
 
 import numpy as np
@@ -17,6 +16,8 @@ from xyzgraph import DATA, build_graph, read_xyz_file
 logger = logging.getLogger(__name__)
 
 if TYPE_CHECKING:
+    from pathlib import Path
+
     import networkx as nx
 
 _Atoms: TypeAlias = list[tuple[str, tuple[float, float, float]]]
@@ -177,12 +178,14 @@ def _find_viewer() -> str:
 
     # Search common unix install paths for v.* (e.g. v.2.2) — picks highest version
     import glob
+    from pathlib import Path
 
     search_dirs = [Path.home() / "bin", Path.home() / ".local" / "bin", Path("/usr/local/bin"), Path("/opt/")]
 
     candidates = []
     for dir in search_dirs:
         candidates.extend(glob.glob(str(dir / "v.[0-9]*")))
+        candidates.extend(glob.glob(str(dir / "v")))
 
     if candidates:
         # sorting gives the latest versions
